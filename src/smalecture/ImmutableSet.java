@@ -13,6 +13,10 @@ public class ImmutableSet<T> {
         this.first = first;
     }
 
+    ImmutableSet() {
+        this(null);
+    }
+
     public int size() {
         // TODO Auto-generated method stub
         return 0;
@@ -32,7 +36,8 @@ public class ImmutableSet<T> {
     }
 
     public Iterator<T> iterator() {
-        // TODO Auto-generated method stub
+
+
         return null;
     }
 
@@ -47,22 +52,31 @@ public class ImmutableSet<T> {
     }
 
     public ImmutableSet<T> add(T e) {
-        return new ImmutableSet (new ImmutableItem(e,first,true));
+        return new ImmutableSet<T>(new ImmutableItem<T>(e,first,true));
     }
 
     public ImmutableSet<T> remove(T e) {
-        // TODO Auto-generated method stub
-        return null;
+        return new ImmutableSet<T>(new ImmutableItem<T>(e,first,false));
     }
 
     public boolean containsAll(Collection<?> c) {
-        // TODO Auto-generated method stub
-        return false;
+
+        for(Object o: c) {
+            if (!contains(o)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public ImmutableSet<T> addAll(Collection<? extends T> c) {
-        // TODO Auto-generated method stub
-        return null;
+
+        ImmutableSet<T> result = this;
+
+        for(T o: c) {
+            result = result.add(o);
+        }
+        return result;
     }
 
     public ImmutableSet<T> retainAll(Collection<?> c) {
@@ -71,8 +85,13 @@ public class ImmutableSet<T> {
     }
 
     public ImmutableSet<T> removeAll(Collection<? extends T> c) {
-        // TODO Auto-generated method stub
-        return null;
+
+        ImmutableSet<T> result = this;
+
+        for(T o: c) {
+            result = result.remove(o);
+        }
+        return result;
     }
 
 }
