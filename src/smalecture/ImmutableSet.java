@@ -2,7 +2,16 @@ package smalecture;
 
 import java.util.*;
 
+
+
 public class ImmutableSet<T> {
+
+    final ImmutableItem <T> first;
+
+    ImmutableSet (ImmutableItem <T> first)
+    {
+        this.first = first;
+    }
 
     public int size() {
         // TODO Auto-generated method stub
@@ -15,8 +24,11 @@ public class ImmutableSet<T> {
     }
 
     public boolean contains(Object o) {
-        // TODO Auto-generated method stub
-        return false;
+        ImmutableItem <T> current = first;
+        while(current != null && !current.value.equals(o)){
+            current = current.next;
+        }
+        return current != null && current.in;
     }
 
     public Iterator<T> iterator() {
@@ -35,8 +47,7 @@ public class ImmutableSet<T> {
     }
 
     public ImmutableSet<T> add(T e) {
-        // TODO Auto-generated method stub
-        return null;
+        return new ImmutableSet (new ImmutableItem(e,first,true));
     }
 
     public ImmutableSet<T> remove(T e) {
