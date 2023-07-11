@@ -18,13 +18,18 @@ public class ImmutableSet<T> {
     }
 
     public int size() {
-        // TODO Auto-generated method stub
-        return 0;
+        int result = 0;
+        Iterator<T> iterator = this.iterator();
+        while (iterator.hasNext()){
+            result++;
+            iterator.next();
+        }
+        return result;
     }
 
     public boolean isEmpty() {
-        // TODO Auto-generated method stub
-        return false;
+
+        return !this.iterator().hasNext();
     }
 
     public boolean contains(Object o) {
@@ -36,19 +41,23 @@ public class ImmutableSet<T> {
     }
 
     public Iterator<T> iterator() {
-
-
-        return null;
+        return new ImmutableSetIterator<T>(first);
     }
 
+    public Set<T> toSet(){
+        Set<T> result = new LinkedHashSet<T>();
+        Iterator<T> iterator = this.iterator();
+        while (iterator.hasNext()){
+            result.add(iterator.next());
+        }
+        return result;
+    }
     public Object[] toArray() {
-        // TODO Auto-generated method stub
-        return null;
+        return this.toSet().toArray();
     }
 
     public <E> E[] toArray(E[] a) {
-        // TODO Auto-generated method stub
-        return null;
+        return this.toSet().toArray(a);
     }
 
     public ImmutableSet<T> add(T e) {
@@ -80,8 +89,15 @@ public class ImmutableSet<T> {
     }
 
     public ImmutableSet<T> retainAll(Collection<?> c) {
-        // TODO Auto-generated method stub
-        return null;
+        ImmutableSet<T> result = this;
+        Iterator<T> iterator = this.iterator();
+        while (iterator.hasNext()){
+            T element = iterator.next();
+            if (!c.contains(element)) {
+                result = result.remove(element);
+            }
+        }
+        return result;
     }
 
     public ImmutableSet<T> removeAll(Collection<? extends T> c) {
